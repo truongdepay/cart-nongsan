@@ -1,0 +1,35 @@
+body {
+    font-family: 'Roboto', sans-serif !important;
+}
+.left-sidebar {
+    top: 0px;
+    float: left;
+    width: 250px;
+    height: 100vh;
+    background: #fff;
+    position: fixed;
+    z-index: 100;
+}
+.content {
+    margin-top: 55px;
+    margin-left: 250px;
+    padding: 30px;
+    margin-right: 100px;
+}
+.td_suggestions {
+    min-width: 270px;
+}
+
+#suggestions {
+    left: 0px;
+    top: 73px;
+}
+.line-through {
+    text-decoration: line-through;
+}
+.bg-success {
+    background: #52a851 !important;
+}
+.bg-light {
+    background: #f4f4f4 !important;
+}

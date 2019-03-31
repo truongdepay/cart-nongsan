@@ -1,0 +1,10 @@
+{
+    "require": {
+        "monolog/monolog": "^1.23",
+        "cocur/slugify": "^3.1",
+        "doctrine/orm": "^2.5",
+        "curl/curl": "^2.2",
+        "phpmailer/phpmailer": "^6.0",
+        "facebook/graph-sdk": "^5.7"
+    }
+}
