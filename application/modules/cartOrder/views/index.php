@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-2 col-lg-2 p-sm-3 p-2 p-md-0">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" name="order-number" value="<?= $item['count'] ?>">
+                                        <input type="number" class="form-control" name="order-number-<?= $item['id'] ?>" value="<?= $item['count'] ?>">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-danger" type="button" onclick="addProduct(this)" data-id="<?= $item['id'] ?>">OK</button>
                                         </div>
@@ -73,15 +73,15 @@
 <script>
     function addProduct(elm) {
         var id = $(elm).attr('data-id');
-        var type = 'add';
-        var url = window.location.origin + '/cartOrder/orderProduct';
-        var order = $("input[name=order-number]").val();
+        var url = '<?= base_url('cartOrder/index/orderProduct'); ?>';
+        var name = "input[name=order-number-" + id +"]";
+        var order = $(name).val();
         var csrf_value = $("input[name=csrf_name]").val();
 
         $.ajax({
             url : url,
             type : 'post',
-            data : {csrf_name : csrf_value, id : id, order : order, type : type},
+            data : {csrf_name : csrf_value, id : id, order : order},
             dataType : 'json',
             success : function (result) {
                 window.location.reload();

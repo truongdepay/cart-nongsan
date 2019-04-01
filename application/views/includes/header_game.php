@@ -19,6 +19,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?= base_url('assets/dist/css/style.min.css'); ?>" rel="stylesheet"/>
     <link href="<?= base_url('assets/assets/extra-libs/prism/prism.css'); ?>" rel="stylesheet"/>
     <link href="<?= base_url('assets/fontawesome/css/all.css')?>" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.date.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.time.css') ?>">
     <link href="<?= base_url('assets/css/styles.css')?>" rel="stylesheet" type="text/css">
 
     <script src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
@@ -33,6 +36,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?= base_url('assets/dist/js/sidebarmenu.js') ?>"></script>
     <script src="<?= base_url('assets/dist/js/custom.min.js') ?>"></script>
     <script src="<?= base_url('assets/assets/extra-libs/prism/prism.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/pickadate/lib/compressed/picker.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/pickadate/lib/compressed/picker.date.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/pickadate/lib/compressed/picker.time.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/pickadate/lib/compressed/legacy.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/moment/moment.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/daterangepicker/daterangepicker.js') ?>"></script>
+    <script src="<?= base_url('assets/dist/js/pages/forms/datetimepicker/datetimepicker.init.js') ?>"></script>
     <script src="<?= base_url('assets/js/script.js'); ?>"></script>
 
 </head>
