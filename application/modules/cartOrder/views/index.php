@@ -62,7 +62,7 @@
                         <p>(đã bao gồm VAT)</p>
                     </div>
                 </div>
-                <input type="button" class="btn btn-danger btn-block " value="Tiến hành đặt hàng">
+                <a href="<?= site_url('cartOrder/index/startOrder') ?>" class="btn btn-danger btn-block ">Tiến hành đặt hàng</a>
             </div>
         </div>
     </div>

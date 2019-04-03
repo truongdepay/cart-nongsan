@@ -22,9 +22,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.date.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.time.css') ?>">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="<?= base_url('assets/css/styles.css')?>" rel="stylesheet" type="text/css">
 
     <script src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="<?= base_url('assets/assets/libs/popper.js/dist/umd/popper.min.js') ?>"></script>
     <script src="<?= base_url('assets/assets/libs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
     <script src="<?= base_url('assets/dist/js/app.min.js') ?>"></script>

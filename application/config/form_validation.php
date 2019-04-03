@@ -33,3 +33,26 @@ $config['form_validation'] = [
         'rules' => 'required|valid_email|is_unique[user.email]'
     ]
 ];
+
+$config['validation_cart'] =[
+    'fullname' => [
+        'field' => 'fullname',
+        'label' => 'Tên',
+        'rules' => 'required|min_length[1]|max_length[50]'
+    ],
+    'phone' => [
+        'field' => 'phone',
+        'label' => 'Điện thoại',
+        'rules' => 'required|min_length[9]|max_length[11]'
+    ],
+    'email' => [
+        'field' => 'email',
+        'label' => 'Email',
+        'rules' => 'valid_email'
+    ],
+    'address' => [
+        'field' => 'email',
+        'label' => 'Địa chỉ',
+        'rules' => 'required'
+    ]
+];
