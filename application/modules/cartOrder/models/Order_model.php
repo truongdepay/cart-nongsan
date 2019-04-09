@@ -14,7 +14,7 @@ class Order_model extends Base_models
     {
         parent::__construct();
         $this->db = $this->load->database('default', TRUE, TRUE);
-        $this->tableName = 'order';
+        $this->tableName = 'order_cart';
         $this->id = 'id';
         $this->status = 'status';
         $this->content = 'content';

@@ -43,7 +43,7 @@ $config['validation_cart'] =[
     'phone' => [
         'field' => 'phone',
         'label' => 'Điện thoại',
-        'rules' => 'required|min_length[9]|max_length[11]'
+        'rules' => 'required|min_length[9]|max_length[11]|numeric'
     ],
     'email' => [
         'field' => 'email',
@@ -51,7 +51,7 @@ $config['validation_cart'] =[
         'rules' => 'valid_email'
     ],
     'address' => [
-        'field' => 'email',
+        'field' => 'address',
         'label' => 'Địa chỉ',
         'rules' => 'required'
     ]

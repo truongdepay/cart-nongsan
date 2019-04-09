@@ -1,0 +1,38 @@
+@media (max-width: 767px) {
+    .box-cart-order {
+        display: none;
+        background-color: #fafafa;
+        height: 150px;
+        box-shadow: 1px -1px 11px #0000001c;
+        position: fixed;
+        bottom: 0px;
+        width: 96%;
+        z-index: 10000;
+        margin: 0 auto;
+        left: 0px;
+        right: 0px;
+    }
+}
+
+.icon-up-pc {
+    position: absolute;
+    top: -10px;
+    color: #fff;
+}
+.box-order-cart-pc {
+    position: absolute;
+    left: 0px;
+    background: #fff;
+    width: 265px;
+    padding: 10px;
+    height: 90px;
+    top: 30px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px #00000029;
+}
+.icon-remove-pc {
+    position: absolute;
+    right: 10px;
+    color: #616161;
+    z-index: 100;
+}

@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 if(ENVIRONMENT === 'production')
 {
-	$config['base_url'] = 'https://vegitoz.com';
+	$config['base_url'] = 'https://nongsandungha.com/order';
 } else {
 	$config['base_url'] = 'http://192.168.0.80/cart-nongsan';
 }
@@ -386,7 +386,7 @@ $config['encryption_key'] = 'uKeaVpccM9jFSvgfGsS2C4hbcpGacZ22';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = APPPATH . '/common/session/';
+$config['sess_save_path'] = APPPATH . 'ci_session/';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

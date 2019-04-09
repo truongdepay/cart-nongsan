@@ -61,7 +61,7 @@ class Index extends MX_Controller
             $infocart = [
                 'total_money' => $totalMoney
             ];
-            $infocart = array_merge($infocart, $result);
+            $infocart['info'] = $result;
             $this->session->set_userdata('info_cart', $infocart);
             $data['totalMoney'] = $totalMoney;
             $data['totalProduct'] = count($response);
@@ -102,16 +102,25 @@ class Index extends MX_Controller
                     }
 
                     $this->session->set_userdata('cart', $ss);
-                    $dataSession = $ss;
+                    $resultOrder = $this->session->userdata('cart');
+                    $count = count($resultOrder);
                 } else {
                     $dataSession = [
                         $id => 1
                     ];
                     $this->session->set_userdata('cart', $dataSession);
+                    $resultOrder = $this->session->userdata('cart');
+                    $count = count($resultOrder);
                 }
+                $response = [
+                    'result' => 1,
+                    'detail' => [
+                        'count' => $count
+                    ]
+                ];
                 $this->output
                     ->set_content_type('application/json')
-                    ->set_output(json_encode($dataSession));
+                    ->set_output(json_encode($response));
             }
         } else {
             $this->output
@@ -125,16 +134,17 @@ class Index extends MX_Controller
 
     public function startOrder()
     {
+        $data = [];
+        $data['siteTitle'] = 'Tiến hành đặt hàng';
         if ($this->session->has_userdata('info_cart')) {
             $infocart = $this->session->userdata('info_cart');
             var_dump($infocart);
-            $data = [];
-            $data['siteTitle'] = 'Tiến hành đặt hàng';
             $data['totalMoney'] = $infocart['total_money'];
-
             if (strtolower($this->method) == 'post') {
                 $this->load->config('form_validation');
+                $this->load->config('config_message');
                 $validation = config_item('validation_cart');
+                $message = config_item('message_error');
                 $fullname = $this->input->post('fullname');
                 $phone = $this->input->post('phone');
                 $email = $this->input->post('email');
@@ -157,66 +167,89 @@ class Index extends MX_Controller
                         $validation['email']
                     ];
                 }
-
+                $this->form_validation->set_message($message['register']);
                 $this->form_validation->set_rules($config);
                 if ($this->form_validation->run() == FALSE)
                 {
-                    // action
+                    $template = 'start_order';
+                    $this->views->loadView($template, $data);
                 }
                 else
                 {
-
-                    if ($receive == 0) {
-                        $cartData = [
-                            'name_product' => $infocart[0]['title'],
-                            'count' => $infocart[0]['count'],
-                            'price' => $infocart[0]['price'],
-                            'total_curency' => $infocart['total_money'],
-                            'first_name' => $fullname,
-                            'phone' => $phone,
-                            'email' => $email,
-                            'adress' => $address,
-                            'date' => $dateReceive,
-                            'time' => '',
-                            'note' => $note
-                        ];
-
-                        $result = [
-                            'status' => 0,
-                            'content' => json_encode($cartData),
-                            'created_at' => date("Y-m-d H:m:s"),
-                            'order_at' => 0
-                        ];
-                    } else {
-                        $cartData = [
-                            'name_product' => $infocart[0]['title'],
-                            'count' => $infocart[0]['count'],
-                            'price' => $infocart[0]['price'],
-                            'total_curency' => $infocart['total_money'],
-                            'first_name' => $fullname,
-                            'phone' => $phone,
-                            'email' => $email,
-                            'adress' => 'Cơ sở 1',
-                            'date' => $dateReceive,
-                            'time' => '',
-                            'note' => $note
-                        ];
-
-                        $result = [
-                            'status' => 0,
-                            'content' => json_encode($cartData),
-                            'created_at' => date("Y-m-d H:m:s"),
-                            'order_at' => 1
-                        ];
-                    }
-
+                    $dataOrder = [
+                        'name' => $fullname,
+                        'status' => 0,
+                        'phone' => $phone,
+                        'email' => $email,
+                        'type' => $receive,
+                        'address' => $address,
+                        'date_order' => time(),
+                        'date_receive' => $dateReceive,
+                        'content' => json_encode($infocart)
+                    ];
                     $this->load->model('order_model');
-                    $this->order_model->add($result);
+                    $this->order_model->add($dataOrder);
+                    $this->session->unset_userdata('cart');
+                    $this->session->unset_userdata('info_cart');
+                    $template = 'order_success';
+                    $this->views->loadView($template, $data);
                 }
+            } else {
+                $template = 'start_order';
+                $this->views->loadView($template, $data);
             }
 
-            $template = 'start_order';
-            $this->views->loadView($template, $data);
+
+        } else {
+            redirect('cartOrder/index');
         }
+    }
+
+    public function deleteProduct()
+    {
+        if (strtolower($this->method) == 'post') {
+            $id = $this->input->post('id');
+            if ($this->session->has_userdata('cart')) {
+                $ss = $this->session->userdata('cart');
+                if (isset($ss[$id])) {
+                    unset($ss[$id]);
+                    $this->session->set_userdata('cart', $ss);
+                }
+                if (count($ss) == 0) {
+                    $this->session->unset_userdata('cart');
+                }
+                $response = [
+                    'result' => 1
+                ];
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode($response));
+            }
+        }
+    }
+
+    public function displayCart()
+    {
+        if ($this->session->has_userdata('cart')) {
+            $response = $this->session->userdata('cart');
+            $resultOrder = $this->session->userdata('cart');
+            $count = count($resultOrder);
+            $response = [
+                'result' => 1,
+                'detail' => [
+                    'count' => $count
+                ]
+            ];
+        } else {
+            $response = [
+                'result' => 1,
+                'detail' => [
+                    'count' => 0
+                ]
+            ];
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($response));
     }
 }

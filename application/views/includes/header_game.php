@@ -59,10 +59,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-xl-10">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="https://nongsandungha.com/wp-content/uploads/2017/04/1.png" alt="" style="max-height: 50px">
+                        <a href="https://nongsandungha.com"><img src="https://nongsandungha.com/wp-content/uploads/2017/04/1.png" alt="" style="max-height: 50px"></a>
                     </div>
                     <div class="col-md-6">
-                        <p><i class="fas fa-phone-square"></i> Liên hệ: 0986758473 (Hỗ trợ 24/24)</p>
+                        <p><i class="fas fa-phone-square"></i> Liên hệ: 0901 539 693 (Hỗ trợ 24/7)</p>
                     </div>
                 </div>
             </div>

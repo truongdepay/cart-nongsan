@@ -21,4 +21,13 @@ class Views
         $this->CI->load->view($template, $data);
         $this->CI->load->view(config_item('pathFooterGame'), $data);
     }
+
+    public function loadViewAdmin($template, $data = [])
+    {
+        $this->CI->load->config('config_template');
+        $this->CI->load->view(config_item('pathHeaderAdmin'), $data);
+        $this->CI->load->view($template, $data);
+        $this->CI->load->view(config_item('pathFooterAdmin'), $data);
+    }
+
 }

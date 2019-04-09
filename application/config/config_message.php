@@ -14,7 +14,8 @@ $config['message_error'] = [
         'min_length' => '{field} phải có tối thiểu {param} ký tự.',
         'max_length' => '{field} chỉ được phép có tối đa {param} ký tự.',
         'valid_email' => '{field} không hợp lệ',
-        'matches' => '{field} không khớp với {param}'
+        'matches' => '{field} không khớp với {param}',
+        'numeric' => '{field} phải là dạng số'
     ]
 
 ];

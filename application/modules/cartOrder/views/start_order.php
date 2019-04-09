@@ -14,22 +14,25 @@
         </div>
         <?= form_open() ?>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-lg-8 box-product-order">
                 <div class="card border-0">
                     <div class="card-body bg-white">
                         <div class="form-group">
                             <label for="fullname">Họ tên<span class="text-danger">(Bắt buộc)</span></label>
-                            <input type="text" class="form-control" id="fullname" name="fullname" placeholder="">
+                            <input type="text" class="form-control" id="fullname" name="fullname" placeholder="" value="<?= set_value('fullname') ?>">
+                            <?= form_error('fullname', '<p class="text-danger mb-0">', '</p>') ?>
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Điện thoại<span class="text-danger">(Bắt buộc)</span></label>
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="" min="0" max="99999999999" maxlength="11">
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="" min="0" max="99999999999" maxlength="11" <?= set_value('phone') ?>>
+                            <?= form_error('phone', '<p class="text-danger mb-0">', '</p>') ?>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="" value="<?= set_value('email') ?>">
+                            <?= form_error('email', '<p class="text-danger mb-0">', '</p>') ?>
                         </div>
 
                         <label  for="customRadio1" class="d-block"><input type="radio" id="customRadio1" name="receive" value="0" checked> Giao hàng tận nơi</label>
@@ -51,15 +54,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 box-order">
                 <div class="card border-0">
                     <div class="card-body">
                         <h5>Thành tiền</h5>
                         <h3 class="text-danger"><?= number_format($totalMoney) ?>đ</h3>
-                        <p>(đã bao gồm VAT)</p>
                     </div>
                 </div>
-                <input type="submit" class="btn btn-danger btn-block " value="Tiến hành đặt hàng">
+                <input type="submit" class="btn btn-danger btn-block " value="Đặt ngay">
             </div>
         </div>
     </div>
@@ -84,7 +86,8 @@
     function displayAdress(elm) {
         var check = $(elm).val();
         var html = '<label for="address">Địa chỉ<span class="text-danger">(Bắt buộc)</span></label>\n' +
-            '                            <input type="text" class="form-control" id="address" name="address" placeholder="">';
+            '                            <input type="text" class="form-control" id="address" name="address" placeholder="" value="">'+
+            '<?= form_error('address', '<p class="text-danger mb-0">', '</p>') ?>';
         if (check == 0) {
             $("#address-form").html(html);
         } else {

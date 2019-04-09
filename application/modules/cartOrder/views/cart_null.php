@@ -23,25 +23,3 @@
         </div>
     </div>
 </div>
-<input type="hidden" name="csrf_name" value="<?= $csrf_value ?>">
-
-
-<script>
-    function addProduct(elm) {
-        var id = $(elm).attr('data-id');
-        var type = 'add';
-        var url = window.location.origin + '/cartOrder/orderProduct';
-        var order = $("input[name=order-number]").val();
-        var csrf_value = $("input[name=csrf_name]").val();
-
-        $.ajax({
-            url : url,
-            type : 'post',
-            data : {csrf_name : csrf_value, id : id, order : order, type : type},
-            dataType : 'json',
-            success : function (result) {
-                window.location.reload();
-            }
-        });
-    }
-</script>
