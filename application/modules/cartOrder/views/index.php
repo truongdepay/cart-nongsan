@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-9 col-xl-8">
+            <div class="col-lg-9 col-xl-8 box-product-order">
                 <?php
                 foreach ($result as $item) {
                     ?>
@@ -30,16 +30,18 @@
                                 </div>
                                 <div class="col-9 col-sm-6 col-md-6 col-lg-6">
                                     <h5><?= $item['title'] ?></h5>
-                                    <a href="" class="text">Xóa sản phẩm</a>
+                                    <a href="javascript:deleteProduct(<?= $item['id'] ?>)" class="text">Xóa sản phẩm</a>
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-2 col-lg-2 p-2 p-sm-0">
                                     <h4><?= number_format($item['price']) ?> đ</h4>
+                                    <?php /**
                                     <p class="line-through">190.000 đ</p>
                                     <input type="button" class="btn btn-sm btn-warning" value="Giảm 13%">
+                                    */ ?>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-2 col-lg-2 p-sm-3 p-2 p-md-0">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" name="order-number" value="<?= $item['count'] ?>">
+                                        <input type="number" class="form-control" name="order-number-<?= $item['id'] ?>" value="<?= $item['count'] ?>">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-danger" type="button" onclick="addProduct(this)" data-id="<?= $item['id'] ?>">OK</button>
                                         </div>
@@ -54,15 +56,14 @@
                 ?>
 
             </div>
-            <div class="col-lg-3 col-xl-4">
-                <div class="card border-0">
+            <div class="col-lg-3 col-xl-4 box-order">
+                <div class="card border-0 ">
                     <div class="card-body">
                         <h5>Thành tiền</h5>
                         <h3 class="text-danger"><?= number_format($totalMoney) ?> đ</h3>
-                        <p>(đã bao gồm VAT)</p>
                     </div>
                 </div>
-                <input type="button" class="btn btn-danger btn-block " value="Tiến hành đặt hàng">
+                <a href="<?= site_url('cartOrder/index/startOrder') ?>" class="btn btn-danger btn-block ">Tiến hành đặt hàng</a>
             </div>
         </div>
     </div>
@@ -73,18 +74,36 @@
 <script>
     function addProduct(elm) {
         var id = $(elm).attr('data-id');
-        var type = 'add';
-        var url = window.location.origin + '/cartOrder/orderProduct';
-        var order = $("input[name=order-number]").val();
+        var url = '<?= base_url('cartOrder/index/orderProduct'); ?>';
+        var name = "input[name=order-number-" + id +"]";
+        var order = $(name).val();
         var csrf_value = $("input[name=csrf_name]").val();
+        if (order > 0) {
+            $.ajax({
+                url : url,
+                type : 'post',
+                data : {csrf_name : csrf_value, id : id, order : order},
+                dataType : 'json',
+                success : function (result) {
+                    window.location.href = "<?= base_url('cartOrder/index'); ?>";
+                }
+            });
+        } else {
+            alert("Vui lòng nhập từ 1 trở lên");
+        }
 
+    }
+
+    function deleteProduct(id) {
+        var url = '<?= base_url('cartOrder/index/deleteProduct'); ?>';
+        var csrf_value = $("input[name=csrf_name]").val();
         $.ajax({
             url : url,
             type : 'post',
-            data : {csrf_name : csrf_value, id : id, order : order, type : type},
+            data : {csrf_name : csrf_value, id : id},
             dataType : 'json',
             success : function (result) {
-                window.location.reload();
+                window.location.href = "<?= base_url('cartOrder/index'); ?>";
             }
         });
     }

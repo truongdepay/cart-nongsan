@@ -1,15 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif !important;
 }
-.left-sidebar {
-    top: 0px;
-    float: left;
-    width: 250px;
-    height: 100vh;
-    background: #fff;
-    position: fixed;
-    z-index: 100;
-}
 .content {
     margin-top: 55px;
     margin-left: 250px;
@@ -32,4 +23,20 @@ body {
 }
 .bg-light {
     background: #f4f4f4 !important;
+}
+
+@media (max-width: 991px) {
+    .box-order {
+        position: fixed;
+        bottom: 0px;
+        background: #f4f4f4;
+        padding: 20px 10px;
+        z-index: 100;
+        -webkit-box-shadow: 0px 0px 6px #0000004d;
+        -moz-box-shadow:  0px 0px 6px #0000004d;
+        box-shadow: 0px 0px 6px #0000004d;
+    }
+    .box-product-order {
+        margin-bottom: 250px;
+    }
 }

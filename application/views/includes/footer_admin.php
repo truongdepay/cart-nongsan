@@ -6,7 +6,9 @@
  * Time: 3:38 PM
  */
 ?>
-
+</div>
+</div>
+</div>
 <script>
     $('[data-toggle="tooltip"]').tooltip();
     $(".preloader").fadeOut();

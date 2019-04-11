@@ -19,9 +19,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?= base_url('assets/dist/css/style.min.css'); ?>" rel="stylesheet"/>
     <link href="<?= base_url('assets/assets/extra-libs/prism/prism.css'); ?>" rel="stylesheet"/>
     <link href="<?= base_url('assets/fontawesome/css/all.css')?>" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.date.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets/libs/pickadate/lib/themes/default.time.css') ?>">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="<?= base_url('assets/css/styles.css')?>" rel="stylesheet" type="text/css">
 
     <script src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="<?= base_url('assets/assets/libs/popper.js/dist/umd/popper.min.js') ?>"></script>
     <script src="<?= base_url('assets/assets/libs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
     <script src="<?= base_url('assets/dist/js/app.min.js') ?>"></script>
@@ -33,6 +38,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?= base_url('assets/dist/js/sidebarmenu.js') ?>"></script>
     <script src="<?= base_url('assets/dist/js/custom.min.js') ?>"></script>
     <script src="<?= base_url('assets/assets/extra-libs/prism/prism.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/pickadate/lib/compressed/picker.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/pickadate/lib/compressed/picker.date.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/pickadate/lib/compressed/picker.time.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/pickadate/lib/compressed/legacy.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/moment/moment.js') ?>"></script>
+    <script src="<?= base_url('assets/assets/libs/daterangepicker/daterangepicker.js') ?>"></script>
+    <script src="<?= base_url('assets/dist/js/pages/forms/datetimepicker/datetimepicker.init.js') ?>"></script>
     <script src="<?= base_url('assets/js/script.js'); ?>"></script>
 
 </head>
@@ -47,10 +59,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-xl-10">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="https://nongsandungha.com/wp-content/uploads/2017/04/1.png" alt="" style="max-height: 50px">
+                        <a href="https://nongsandungha.com"><img src="https://nongsandungha.com/wp-content/uploads/2017/04/1.png" alt="" style="max-height: 50px"></a>
                     </div>
                     <div class="col-md-6">
-                        <p><i class="fas fa-phone-square"></i> Liên hệ: 0986758473 (Hỗ trợ 24/24)</p>
+                        <p><i class="fas fa-phone-square"></i> Liên hệ: 0901 539 693 (Hỗ trợ 24/7)</p>
                     </div>
                 </div>
             </div>
