@@ -8,12 +8,12 @@
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
+        <div class="card" style="overflow-x: auto">
+            <div class="card-header" >
                 <h3><?= $siteTitle ?></h3>
             </div>
-            <div class="card-body">
-                <table class="table table-striped">
+            <div class="card-body" >
+                <table class="table" style="min-width: 700px">
                     <thead class="bg-inverse text-white">
                     <tr>
                         <th>
@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                     <?php foreach ($result as $value) { ?>
-                        <tr>
+                        <tr class="<?= ($value->status == 0)?'bg-light-danger' : '' ?>" id="trow-<?= $value->id ?>" >
                             <td>
                                 <?= $value->id ?>
                             </td>
@@ -43,7 +43,7 @@
                                 <?= $value->name ?>
                             </td>
                             <td>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?= $value->id ?>">Chi tiết</button>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?= $value->id ?>" <?= ($value->status == 0)?'onclick="updateStatus(this, ' . $value->id . ', 1)"' : '' ?> uri="<?= base_url(); ?>">Chi tiết</button>
                             </td>
                             <td>
                                 <?= date('d/m/Y  H:s:i', $value->date_order) ?>
@@ -109,3 +109,27 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="csrf_name" value="<?= $csrf_value ?>">
+<script>
+    function updateStatus(elm, id, status)
+    {
+        var url = $(elm).attr('uri') + 'adminCart/index/updateStatus';
+        var data = { id : id, status : status};
+        var idRow = "#trow-" + id;
+        var classRow = $(idRow).attr("class");
+        $.ajax({
+            url : url,
+            type : 'get',
+            data : data,
+            dataType : 'json',
+            success  : function (result) {
+                if (result.result == 1) {
+                    if (result.detail.status != 0) {
+                        $(idRow).removeClass(classRow);
+                        $(elm).attr("onclick", "");
+                    }
+                }
+            }
+        });
+    }
+</script>
