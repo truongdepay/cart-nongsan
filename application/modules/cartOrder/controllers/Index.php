@@ -64,6 +64,7 @@ class Index extends MX_Controller
             ];
             $infocart['info'] = $result;
             $this->session->set_userdata('info_cart', $infocart);
+
             $data['totalMoney'] = $totalMoney;
             $data['totalProduct'] = count($response);
             $data['result'] = $result;
@@ -71,6 +72,7 @@ class Index extends MX_Controller
             $this->views->loadView($template, $data);
         } else {
             $template = 'cart_null';
+            $this->session->unset_userdata('info_cart');
             $this->views->loadView($template, $data);
         }
 
