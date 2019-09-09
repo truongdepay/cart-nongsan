@@ -52,51 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body class="bg-light">
 <div id="main-wrapper">
-    <header class="topbar">
-        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-            <div class="navbar-header">
-                <!-- This is for the sidebar toggle which is visible on mobile only -->
-                <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
-                    <i class="ti-menu ti-close"></i>
-                </a>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Logo -->
-            <!-- ============================================================== -->
-        </nav>
-    </header>
-    <aside class="left-sidebar">
-        <!-- Sidebar scroll-->
-        <div class="scroll-sidebar">
-            <!-- Sidebar navigation-->
-            <nav class="sidebar-nav">
-                <ul id="sidebarnav">
-                    <!-- User Profile-->
-                    <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Personal</span></li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-Car-Wheel"></i><span class="hide-menu">Quản lý </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="index.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Đơn mua lẻ</span></a></li>
-                            <li class="sidebar-item"><a href="index.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Đơn mua sỉ</span></a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-Car-Wheel"></i><span class="hide-menu">Cài đặt </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="index.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Cài đặt chung </span></a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-Car-Wheel"></i><span class="hide-menu">Tài khoản</span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="index.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Chỉnh sửa </span></a></li>
-                            <li class="sidebar-item"><a href="index.html" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Đăng xuất </span></a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <!-- End Sidebar navigation -->
-        </div>
-        <!-- End Sidebar scroll-->
-    </aside>
     <div class="page-wrapper" style="">
         <div class="container-fluid">
-
-
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <a href="<?= site_url('adminCart/index/index') ?>" class="btn btn-info">Đơn hàng lẻ</a>
+                    <a href="<?= site_url('adminCart/index/ordermore') ?>" class="btn btn-danger">Đơn hàng sỉ</a>
+                </div>
+            </div>

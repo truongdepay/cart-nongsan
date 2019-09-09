@@ -99,7 +99,7 @@ if (ENVIRONMENT === 'production') {
         'dsn'	=> '',
         'hostname' => 'localhost',
         'username' => 'root',
-        'password' => '123456',
+        'password' => '',
         'database' => 'nongsandungha',
         'dbdriver' => 'mysqli',
         'dbprefix' => 'wp_',

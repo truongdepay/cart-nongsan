@@ -4,3 +4,4 @@ vendor/
 application/common/
 application/logs-data/
 application/logs/
+application/ci_session/

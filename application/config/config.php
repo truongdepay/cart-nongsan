@@ -27,7 +27,7 @@ if(ENVIRONMENT === 'production')
 {
 	$config['base_url'] = 'https://nongsandungha.com/order';
 } else {
-	$config['base_url'] = 'http://192.168.0.80/cart-nongsan';
+	$config['base_url'] = 'http://192.168.0.84/cart-nongsan';
 }
 
 

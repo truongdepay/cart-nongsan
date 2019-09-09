@@ -7,7 +7,7 @@
  */
 ?>
 <h3>Công cụ</h3>
-<form action="<?= base_url('adminCart/index/index') ?>" method="get">
+<form action="<?= base_url('adminCart/index/ordermore') ?>" method="get">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -31,17 +31,17 @@
             <div class="ml-4 mt-3">
                 <?php if (empty($this->input->get('phone'))) { ?>
                     <?php if ($next > 1) { ?>
-                        <a href="<?= site_url('adminCart/index/index?page=0') ?>" class="btn btn-success"><< Về trang đầu tiên</a>
-                        <a href="<?= site_url('adminCart/index/index?page=' . $prev) ?>" class="btn btn-success">< Prev</a>
+                        <a href="<?= site_url('adminCart/index/ordermore?page=0') ?>" class="btn btn-success"><< Về trang đầu tiên</a>
+                        <a href="<?= site_url('adminCart/index/ordermore?page=' . $prev) ?>" class="btn btn-success">< Prev</a>
                     <?php } ?>
-                    <a href="<?= site_url('adminCart/index/index?page=' . $next) ?>" class="btn btn-success">Next ></a>
+                    <a href="<?= site_url('adminCart/index/ordermore?page=' . $next) ?>" class="btn btn-success">Next ></a>
                 <?php }else{
-                     $phone = empty($this->input->get('phone')) ? '' : $this->input->get('phone');
-                     if ($next > 1) { ?>
-                        <a href="<?= site_url('adminCart/index/index?phone='.$phone.'&page=0') ?>" class="btn btn-success"><< Về trang đầu tiên</a>
-                        <a href="<?= site_url('adminCart/index/index?phone='.$phone.'&page=' . $prev) ?>" class="btn btn-success">< Prev</a>
+                    $phone = empty($this->input->get('phone')) ? '' : $this->input->get('phone');
+                    if ($next > 1) { ?>
+                        <a href="<?= site_url('adminCart/index/ordermore?phone='.$phone.'&page=0') ?>" class="btn btn-success"><< Về trang đầu tiên</a>
+                        <a href="<?= site_url('adminCart/index/ordermore?phone='.$phone.'&page=' . $prev) ?>" class="btn btn-success">< Prev</a>
                     <?php } ?>
-                    <a href="<?= site_url('adminCart/index/index?phone='.$phone.'&page=' . $next) ?>" class="btn btn-success">Next ></a>
+                    <a href="<?= site_url('adminCart/index/ordermore?phone='.$phone.'&page=' . $next) ?>" class="btn btn-success">Next ></a>
                 <?php } ?>
             </div>
             <div class="card-body" >
@@ -63,9 +63,6 @@
                         <th>
                             Ngày đặt
                         </th>
-                        <th>
-                            Hành động
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -75,7 +72,7 @@
                                 <?= $value->id ?>
                             </td>
                             <td>
-                                <?= $value->name ?>
+                                <?= $value->fullname ?>
                             </td>
                             <td>
                                 <?= $value->phone ?>
@@ -84,44 +81,27 @@
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#myModal-<?= $value->id ?>" <?= ($value->status == 0)?'onclick="updateStatus(this, ' . $value->id . ', 1)"' : '' ?> uri="<?= base_url(); ?>">Chi tiết</button>
                             </td>
                             <td>
-                                <?= date('d/m/Y  H:s:i', $value->date_order) ?>
-                            </td>
-                            <td>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="success-<?= $value->id ?>" name="status-<?= $value->id ?>" class="custom-control-input" <?= ($value->status == 2 ? 'checked' : '') ?> uri="<?= base_url(); ?>" onclick="updateStatus(this, '<?= $value->id ?>', 2)">
-                                    <label class="custom-control-label" for="success-<?= $value->id ?>" onclick="updateStatus(this, '<?= $value->id ?>', 2)" uri="<?= base_url(); ?>">Đã giao</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="cancel-<?= $value->id ?>" name="status-<?= $value->id ?>" class="custom-control-input" <?= ($value->status == 3 ? 'checked' : '') ?> uri="<?= base_url(); ?>" onclick="updateStatus(this, '<?= $value->id ?>', 3)">
-                                    <label class="custom-control-label" for="cancel-<?= $value->id ?>" onclick="updateStatus(this, '<?= $value->id ?>', 3)" uri="<?= base_url(); ?>">Đã hủy</label>
-                                </div>
+                                <?= date('d-m-Y H:i:s', $value->date_create) ?>
                             </td>
                         </tr>
-
+                        
                         <!--Modal chi tiet-->
-                        <?php $content = json_decode($value->content); ?>
                         <div id="myModal-<?= $value->id ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title text-danger" id="myModalLabel">Tổng tiền: <?= number_format($content->total_money) ?>đ</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    </div>
                                     <div class="modal-body">
                                         <div class="card">
                                             <div class="card-body">
-                                                <?php for($i = 0; $i < count($content->info); $i++) { ?>
-                                                    <h3 class="text-success"><?= $content->info[$i]->title ?></h3>
-                                                    <h6>Số lượng(<?= $content->info[$i]->count ?>) x giá(<?= number_format($content->info[$i]->price) ?> đ): <?= number_format($content->info[$i]->count * $content->info[$i]->price) ?> đ</h6>
-                                                    <hr>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5>Họ tên: <?= $value->name ?></h5>
+                                                <h5>Họ tên: <?= $value->fullname ?></h5>
                                                 <h5>Điện thoại: <?= $value->phone ?></h5>
                                                 <h5>Email: <?= $value->email ?></h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="text-danger">Sản phẩm: <?= $value->post_title ?></h5>
+                                                <h5>Công ty/ đơn vị: <?= $value->company ?></h5>
+                                                <h5>Số lượng: <?= $value->amount ?></h5>
+                                                <h5>Giá mong muốn: <?= is_numeric($value->desired_price)?number_format($value->desired_price):'' ?> Vnd</h5>
+                                                <h5>Ngày cần có hàng: <?= $value->date_want ?></h5>
                                             </div>
                                         </div>
                                         <div class="card">
@@ -147,17 +127,17 @@
             <div class="ml-4 mb-3">
                 <?php if (empty($this->input->get('phone'))) { ?>
                     <?php if ($next > 1) { ?>
-                        <a href="<?= site_url('adminCart/index/index?page=0') ?>" class="btn btn-success"><< Về trang đầu tiên</a>
-                        <a href="<?= site_url('adminCart/index/index?page=' . $prev) ?>" class="btn btn-success">< Prev</a>
+                        <a href="<?= site_url('adminCart/index/ordermore?page=0') ?>" class="btn btn-success"><< Về trang đầu tiên</a>
+                        <a href="<?= site_url('adminCart/index/ordermore?page=' . $prev) ?>" class="btn btn-success">< Prev</a>
                     <?php } ?>
-                    <a href="<?= site_url('adminCart/index/index?page=' . $next) ?>" class="btn btn-success">Next ></a>
+                    <a href="<?= site_url('adminCart/index/ordermore?page=' . $next) ?>" class="btn btn-success">Next ></a>
                 <?php }else{
                     $phone = empty($this->input->get('phone')) ? '' : $this->input->get('phone');
                     if ($next > 1) { ?>
-                        <a href="<?= site_url('adminCart/index/index?phone='.$phone.'&page=0') ?>" class="btn btn-success"><< Về trang đầu tiên</a>
-                        <a href="<?= site_url('adminCart/index/index?phone='.$phone.'&page=' . $prev) ?>" class="btn btn-success">< Prev</a>
+                        <a href="<?= site_url('adminCart/index/ordermore?phone='.$phone.'&page=0') ?>" class="btn btn-success"><< Về trang đầu tiên</a>
+                        <a href="<?= site_url('adminCart/index/ordermore?phone='.$phone.'&page=' . $prev) ?>" class="btn btn-success">< Prev</a>
                     <?php } ?>
-                    <a href="<?= site_url('adminCart/index/index?phone='.$phone.'&page=' . $next) ?>" class="btn btn-success">Next ></a>
+                    <a href="<?= site_url('adminCart/index/index?ordermore='.$phone.'&page=' . $next) ?>" class="btn btn-success">Next ></a>
                 <?php } ?>
             </div>
         </div>
@@ -165,9 +145,10 @@
 </div>
 
 <script>
+    
     function updateStatus(elm, id, status)
     {
-        var url = $(elm).attr('uri') + 'adminCart/index/updateStatus';
+        var url = $(elm).attr('uri') + 'adminCart/index/updateStatusOrderMore';
         var data = { id : id, status : status};
         var idRow = "#trow-" + id;
         var classRow = $(idRow).attr("class");

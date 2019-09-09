@@ -17,7 +17,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <h4 style="text-align: center">Bạn đã đặt hàng thành công!</h4>
+                <h4 style="text-align: center">Bạn đã đặt hàng thành công, chúng tôi đã tiếp nhận đơn hàng.</h4>
                 <a style="text-align: center;" href="https://nongsandungha.com" class="btn btn-warning m-auto d-block w-25">Tiếp tục mua sắm</a>
             </div>
         </div>
