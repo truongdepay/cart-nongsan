@@ -33,7 +33,7 @@
                                     <a href="javascript:deleteProduct(<?= $item['id'] ?>)" class="text">Xóa sản phẩm</a>
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-2 col-lg-2 p-2 p-sm-0">
-                                    <h4><?= number_format($item['price']) ?> đ</h4>
+                                    <h4><?= number_format($item['price']) ?> đ/<?= $item['unit'] ?></h4>
                                     <?php /**
                                     <p class="line-through">190.000 đ</p>
                                     <input type="button" class="btn btn-sm btn-warning" value="Giảm 13%">

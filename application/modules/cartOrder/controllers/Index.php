@@ -37,6 +37,7 @@ class Index extends MX_Controller
 
         if ($this->session->has_userdata('cart')) {
             $response = $this->session->userdata('cart');
+            $unit = $this->session->userdata('unit');
             $countProduct = $response;
             $listProduct = array_keys($countProduct);
             $result = [];
@@ -49,15 +50,15 @@ class Index extends MX_Controller
                 $priceRow = $this->product_model->getPrice($listProduct[$i]);
                 $price = $priceRow->meta_value;
                 $totalMoney += $price * $countProduct[$listProduct[$i]];
-                $result[] = [
+                $result[$i] = [
                     'id' => $listProduct[$i],
                     'count' => $countProduct[$listProduct[$i]],
                     'title' => $info->post_title,
                     'url' => $info->guid,
                     'thumb' => $thumb->guid,
-                    'price' => $price
+                    'price' => $price,
                 ];
-
+                $result[$i]['unit'] = $unit[$result[$i]['id']];
             }
             $infocart = [
                 'total_money' => $totalMoney
@@ -67,6 +68,7 @@ class Index extends MX_Controller
             $data['totalMoney'] = $totalMoney;
             $data['totalProduct'] = count($response);
             $data['result'] = $result;
+            $data['unit'] = $unit;
             $template = 'index';
             $this->views->loadView($template, $data);
         } else {
@@ -89,11 +91,18 @@ class Index extends MX_Controller
     public function addProduct($id = '', $order = 1)
     {
         $id = !empty($id)?$id:$this->input->get('id');
+        $unit = $this->input->get('attr');
 
         $this->load->model('product_model');
         $check = $this->product_model->checkExist('ID', $id);
         if ($check > 0) {
             if ($order > 0 && is_numeric($order)) {
+                if (!empty($unit)) {
+                    $unitSession = array(
+                        $id => $unit,
+                    );
+                    $this->session->set_userdata('unit', $unitSession);
+                }
                 if ($this->session->has_userdata('cart')) {
                     $ss = $this->session->userdata('cart');
                     if (isset($ss[$id])) {
@@ -192,8 +201,16 @@ class Index extends MX_Controller
                     $idUpdate = $this->order_model->add($dataOrder);
                     //send mail
                     $subject = 'NSDH - Đặt hàng - lúc ' . date('H:i:s d-m-Y ');
+                    $this->load->config('email');
+                    $emailSystem = config_item('email');
+                    
                     $body = $this->bodyMail($dataOrder, $idUpdate);
-                    $this->sendmail->sendTo($subject, $body);
+                    $bodyMailCustomer = $this->mailSendCustomer($dataOrder, $idUpdate);
+                    $this->sendmail->sendTo($subject, $body, $emailSystem['mail_to'], $emailSystem['mail_cc']);
+                    if (!empty($dataOrder['email'])) {
+                        $this->sendmail->sendTo($subject, $bodyMailCustomer, $dataOrder['email']);
+                    }
+                    
                     $this->session->unset_userdata('cart');
                     $this->session->unset_userdata('info_cart');
                     $template = 'order_success';
@@ -289,7 +306,7 @@ class Index extends MX_Controller
             $tb .= "<tr>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $content->info[$i]->title . "</td>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $content->info[$i]->count . "</td>";
-            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price) . "đ</td>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price) . "đ/". !empty($content->info[$i]->unit) ? $content->info[$i]->unit : '' . "</td>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price * $content->info[$i]->count) . "đ</td>";
             $tb .= "</tr>";
         }
@@ -301,6 +318,52 @@ class Index extends MX_Controller
         $tag .= "<h4>Ghi chú: " . $info['note'] . "</h4>";
         $tag .= "<hr>";
         $tag .= "<a href='". base_url('adminCart/index/updateStatus?id=' . $id . "&status=1") . "'>Đánh dấu là đã đọc</a>";
+        return $tag;
+    }
+    
+    public function mailSendCustomer($info, $id)
+    {
+        $this->load->model('order_model');
+        $type = $info['type'];
+        $content = json_decode($info['content']);
+        $tag = '';
+        //$tag .= "<style>table{border:1px solid #ddd;} table tr td{border: 1px solid #ddd; padding: 5px}</style>";
+        $tb = '';
+        $tag .= "<h1>Cảm ơn quý khách đã đặt hàng tại Nongsandungha.com, dưới đây là thông tin Đơn hàng của Quý khách!";
+        $tag .= "<h3>Tên KH: ". $info['name'] ."</h3>";
+        $tag .= "<h3>Điện thoại KH: ". $info['phone'] ."</h3>";
+        $tag .= "<h3>Email KH: ". $info['email'] ."</h3>";
+        if ($type == 0) {
+            $tag .= "<h3>Nhận: tại nhà</h3>";
+        } else {
+            $tag .= "<h3>Nhận: tại cửa hàng</h3>";
+        }
+        $tag .= "<h3>Địa Chỉ nhận: " . $info['address'] . "</h3>";
+        $tag .= "<h3>Ngày nhận: " . $info['date_receive'] . "</h3>";
+        $tag .= "<hr>";
+    
+        $tb .= "<tr style='border:1px solid #333'>";
+        $tb .= "<th style='border:1px solid #333; padding: 5px'>Tên sản phẩm</th>";
+        $tb .= "<th style='border:1px solid #333; padding: 5px'>Số lượng</th>";
+        $tb .= "<th style='border:1px solid #333; padding: 5px'>Giá</th>";
+        $tb .= "<th style='border:1px solid #333; padding: 5px'>Tổng</th>";
+        $tb .= "</tr>";
+    
+        for($i = 0; $i < count($content->info); $i++) {
+            $tb .= "<tr>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $content->info[$i]->title . "</td>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $content->info[$i]->count . "</td>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price) . "đ/". !empty($content->info[$i]->unit) ? $content->info[$i]->unit : '' . "</td>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price * $content->info[$i]->count) . "đ</td>";
+            $tb .= "</tr>";
+        }
+        $tag .= "<table style='font-size: 15px;'>";
+        $tag .= $tb;
+        $tag .= "</table>";
+        $tag .= "<hr>";
+        $tag .= "<h2>Tổng tiền: " . number_format($content->total_money) . "đ</h2>";
+        $tag .= "<h4>Ghi chú: " . $info['note'] . "</h4>";
+        $tag .= "<hr>";
         return $tag;
     }
 }

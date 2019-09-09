@@ -19,19 +19,18 @@ class Sendmail
         $this->_mail = new PHPMailer();
     }
 
-    public function sendTo($subject = '', $body = '')
+    public function sendTo($subject = '', $body = '', $to = '', $cc = array())
     {
         $list_cc = array(
             'mangtayxanh.bn@gmail.com',
             'oceanvn01@gmail.com',
             'Nguyenhangbn2911@gmail.com',
             'haanh88company@gmail.com',
-            'jonhdepay@gmail.com',
         );
         try {
             //Server settings
             $this->_mail->CharSet = 'UTF-8';
-            $this->_mail->SMTPDebug = 2;                                 // Enable verbose debug output
+            $this->_mail->SMTPDebug = 0;                                 // Enable verbose debug output
             $this->_mail->isSMTP();                                      // Set mailer to use SMTP
             $this->_mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
             $this->_mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -43,11 +42,14 @@ class Sendmail
             //Recipients
             $this->_mail->setFrom('admin@nongsandungha.com', 'NongSanDungHa.Com');
             //$this->_mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
-            $this->_mail->addAddress('nongsandungha@gmail.com');               // Name is optional
+            $this->_mail->addAddress($to);               // Name is optional
             $this->_mail->addReplyTo('info@example.com', 'Information');
-            foreach ($list_cc as $value) {
-                $this->_mail->addCC($value);
+            if (count($cc) > 0) {
+                foreach ($cc as $value) {
+                    $this->_mail->addCC($value);
+                }
             }
+            
             //$this->_mail->addBCC('bcc@example.com');
 
 //            //Attachments

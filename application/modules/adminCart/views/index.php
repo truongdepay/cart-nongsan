@@ -112,7 +112,7 @@
                                             <div class="card-body">
                                                 <?php for($i = 0; $i < count($content->info); $i++) { ?>
                                                     <h3 class="text-success"><?= $content->info[$i]->title ?></h3>
-                                                    <h6>Số lượng(<?= $content->info[$i]->count ?>) x giá(<?= number_format($content->info[$i]->price) ?> đ): <?= number_format($content->info[$i]->count * $content->info[$i]->price) ?> đ</h6>
+                                                    <h6>Số lượng(<?= $content->info[$i]->count ?>) x giá(<?= number_format($content->info[$i]->price) ?> đ/<?= !empty($content->info[$i]->unit) ? $content->info[$i]->unit : "" ?>): <?= number_format($content->info[$i]->count * $content->info[$i]->price) ?> đ</h6>
                                                     <hr>
                                                 <?php } ?>
                                             </div>
