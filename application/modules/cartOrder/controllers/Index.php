@@ -98,10 +98,17 @@ class Index extends MX_Controller
         if ($check > 0) {
             if ($order > 0 && is_numeric($order)) {
                 if (!empty($unit)) {
-                    $unitSession = array(
-                        $id => $unit,
-                    );
-                    $this->session->set_userdata('unit', $unitSession);
+                    if ($this->session->has_userdata('unit')) {
+                        $unitSession = $this->session->userdata('unit');
+                        $unitSession[$id] = $unit;
+                        $this->session->set_userdata('unit', $unitSession);
+                    } else {
+                        $unitSession = array(
+                            $id => $unit
+                        );
+                        $this->session->set_userdata('unit', $unitSession);
+                    }
+                    
                 }
                 if ($this->session->has_userdata('cart')) {
                     $ss = $this->session->userdata('cart');
@@ -201,6 +208,7 @@ class Index extends MX_Controller
                     $idUpdate = $this->order_model->add($dataOrder);
                     //send mail
                     $subject = 'NSDH - Đặt hàng - lúc ' . date('H:i:s d-m-Y ');
+                    $subjectCustomer = 'NONGSANDUNGHA.COM - Đặt hàng ' . date('H:i:s d-m-Y ');
                     $this->load->config('email');
                     $emailSystem = config_item('email');
                     
@@ -208,7 +216,7 @@ class Index extends MX_Controller
                     $bodyMailCustomer = $this->mailSendCustomer($dataOrder, $idUpdate);
                     $this->sendmail->sendTo($subject, $body, $emailSystem['mail_to'], $emailSystem['mail_cc']);
                     if (!empty($dataOrder['email'])) {
-                        $this->sendmail->sendTo($subject, $bodyMailCustomer, $dataOrder['email']);
+                        $this->sendmail->sendTo($subjectCustomer, $bodyMailCustomer, $dataOrder['email']);
                     }
                     
                     $this->session->unset_userdata('cart');
@@ -299,6 +307,7 @@ class Index extends MX_Controller
         $tb .= "<th style='border:1px solid #333; padding: 5px'>Tên sản phẩm</th>";
         $tb .= "<th style='border:1px solid #333; padding: 5px'>Số lượng</th>";
         $tb .= "<th style='border:1px solid #333; padding: 5px'>Giá</th>";
+        $tb .= "<th style='border:1px solid #333; padding: 5px'>Đơn vị</th>";
         $tb .= "<th style='border:1px solid #333; padding: 5px'>Tổng</th>";
         $tb .= "</tr>";
 
@@ -306,7 +315,8 @@ class Index extends MX_Controller
             $tb .= "<tr>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $content->info[$i]->title . "</td>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $content->info[$i]->count . "</td>";
-            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price) . "đ/". !empty($content->info[$i]->unit) ? $content->info[$i]->unit : '' . "</td>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price) . "đ</td>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px; font-size: 13px; font-style: italic'>" . (!empty($content->info[$i]->unit) ? $content->info[$i]->unit : '--') . "</td>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price * $content->info[$i]->count) . "đ</td>";
             $tb .= "</tr>";
         }
@@ -346,6 +356,7 @@ class Index extends MX_Controller
         $tb .= "<th style='border:1px solid #333; padding: 5px'>Tên sản phẩm</th>";
         $tb .= "<th style='border:1px solid #333; padding: 5px'>Số lượng</th>";
         $tb .= "<th style='border:1px solid #333; padding: 5px'>Giá</th>";
+        $tb .= "<th style='border:1px solid #333; padding: 5px'>Đơn vị</th>";
         $tb .= "<th style='border:1px solid #333; padding: 5px'>Tổng</th>";
         $tb .= "</tr>";
     
@@ -353,7 +364,8 @@ class Index extends MX_Controller
             $tb .= "<tr>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $content->info[$i]->title . "</td>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $content->info[$i]->count . "</td>";
-            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price) . "đ/". !empty($content->info[$i]->unit) ? $content->info[$i]->unit : '' . "</td>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price) . "đ</td>";
+            $tb .= "<td style='border:1px solid #333; padding: 5px; font-size: 13px; font-style: italic'>" . (!empty($content->info[$i]->unit) ? $content->info[$i]->unit : '--') . "</td>";
             $tb .= "<td style='border:1px solid #333; padding: 5px'>" . number_format($content->info[$i]->price * $content->info[$i]->count) . "đ</td>";
             $tb .= "</tr>";
         }
