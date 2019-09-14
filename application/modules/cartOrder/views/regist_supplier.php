@@ -1,5 +1,6 @@
 <div class="row justify-content-center mb-5">
     <div class="col-xl-8 col-lg-10">
+        <h3 class="mb-5">Đăng ký trở thành nhà cung cấp.</h3>
         <?= form_open() ?>
         <div class="row">
             <div class="col-lg-6 box-product-order mb-0">
@@ -48,7 +49,7 @@
                     </div>
 
                     <div class="card-header">
-                        <h4>5. Số lượng cần bán <span class="text-danger">(*)</span></h4>
+                        <h4>5. Số lượng cần bán (<span class="small">vd: 100 kg, 100 gói, ...</span>) <span class="text-danger">(*)</span></h4>
                     </div>
                     <div class="card-body">
                         <div class="form-group">

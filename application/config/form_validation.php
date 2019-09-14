@@ -63,6 +63,6 @@ $config['validation_cart'] =[
     'mount' => [
         'field' => 'mount',
         'label' => 'Số lượng',
-        'rules' => 'required|numeric'
+        'rules' => 'required'
     ],
 ];

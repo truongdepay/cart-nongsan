@@ -98,7 +98,7 @@
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="text-danger">Sản phẩm: <?= $value->product ?></h5>
-                                                <h4>Số lượng: <span class="text-primary"><?= number_format($value->mount) ?></span></h4>
+                                                <h4>Số lượng: <span class="text-primary"><?= $value->mount ?></span></h4>
                                                 <h4>Mùa vụ: <span class="text-primary"><?= $value->time ?></span></h4>
                                             </div>
                                         </div>

@@ -11,7 +11,8 @@ class RegistSupplier extends MX_Controller
         parent::__construct();
         $this->load->library([
             'views',
-            'form_validation'
+            'form_validation',
+            'sendmail'
         ]);
         $this->load->helper([
             'url',
@@ -69,7 +70,6 @@ class RegistSupplier extends MX_Controller
         $tb = '';
         $tag .= "<h3>Tên KH: ". $info['fullname'] ."</h3>";
         $tag .= "<h3>Điện thoại KH: ". $info['phone'] ."</h3>";
-        $tag .= "<h3>Email KH: ". $info['email'] ."</h3>";
         $tag .= "<h3>Địa Chỉ: " . $info['address'] . "</h3>";
         $tag .= "<hr>";
         $tb .= "<table>";
@@ -81,7 +81,7 @@ class RegistSupplier extends MX_Controller
         
         $tb .= "<tr>";
         $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $info['product'] . "</td>";
-        $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $info['amount'] . "</td>";
+        $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $info['mount'] . "</td>";
         $tb .= "<td style='border:1px solid #333; padding: 5px'>" . $info['time'] . "</td>";
         $tb .= "</tr>";
         $tb .= "</table>";
