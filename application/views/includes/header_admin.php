@@ -58,5 +58,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-6 mb-3">
                     <a href="<?= site_url('adminCart/index/index') ?>" class="btn btn-info">Đơn hàng lẻ</a>
                     <a href="<?= site_url('adminCart/index/ordermore') ?>" class="btn btn-danger">Đơn hàng sỉ</a>
+                    <a href="<?= site_url('adminCart/index/getSupplier') ?>" class="btn btn-primary">Nhà cung cấp</a>
                 </div>
             </div>

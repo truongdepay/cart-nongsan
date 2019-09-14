@@ -21,12 +21,7 @@ class Sendmail
 
     public function sendTo($subject = '', $body = '', $to = '', $cc = array())
     {
-        $list_cc = array(
-            'mangtayxanh.bn@gmail.com',
-            'oceanvn01@gmail.com',
-            'Nguyenhangbn2911@gmail.com',
-            'haanh88company@gmail.com',
-        );
+        
         try {
             //Server settings
             $this->_mail->CharSet = 'UTF-8';

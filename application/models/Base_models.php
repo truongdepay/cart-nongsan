@@ -8,6 +8,8 @@
 
 class Base_models extends CI_Model
 {
+    protected $db;
+    protected $tableName;
     /**
      * @param array $data
      * @return mixed

@@ -54,5 +54,15 @@ $config['validation_cart'] =[
         'field' => 'address',
         'label' => 'Địa chỉ',
         'rules' => 'required'
-    ]
+    ],
+    'product' => [
+        'field' => 'product',
+        'label' => 'Sản phẩm',
+        'rules' => 'required'
+    ],
+    'mount' => [
+        'field' => 'mount',
+        'label' => 'Số lượng',
+        'rules' => 'required|numeric'
+    ],
 ];

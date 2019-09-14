@@ -31,7 +31,7 @@ class Index extends MX_Controller
     {
 
         $data = [];
-        $data['siteTitle'] = "Quản lý đơn hàng";
+        $data['siteTitle'] = "Quản lý đơn hàng lẻ";
         $page = empty($this->input->get('page')) ? 0 : $this->input->get('page');
         $phone = empty($this->input->get('phone')) ? '' : $this->input->get('phone');
         if ($page > 0) {
@@ -103,7 +103,7 @@ class Index extends MX_Controller
     public function orderMore()
     {
         $data = [];
-        $data['siteTitle'] = "Quản lý đơn hàng";
+        $data['siteTitle'] = "Quản lý đơn hàng sỉ";
         $page = empty($this->input->get('page')) ? 0 : $this->input->get('page');
         $phone = empty($this->input->get('phone')) ? '' : $this->input->get('phone');
         if ($page > 0) {
@@ -142,6 +142,76 @@ class Index extends MX_Controller
                     'status' => $status
                 ];
                 $this->ordermore_model->update($id, $data);
+                $response = [
+                    'result' => 1,
+                    'detail' => [
+                        'notify' => 'Success',
+                        'csrf_value' => $this->security->get_csrf_hash(),
+                        'status' => $status
+                    ]
+                ];
+            } else {
+                $response = [
+                    'result' => 0,
+                    'detail' => [
+                        'notify' => 'Error!',
+                        'csrf_value' => $this->security->get_csrf_hash(),
+                    ]
+                ];
+            }
+        } else {
+            $response = [
+                'result' => 0,
+                'detail' => [
+                    'notify' => 'Error Reuest Method! Do not support get request!',
+                    'csrf_value' => $this->security->get_csrf_hash(),
+                ]
+            ];
+        }
+        
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($response));
+    }
+    
+    public function getSupplier()
+    {
+        $data['siteTitle'] = 'Quản lý Nhà cung cấp';
+        $template = 'supplier';
+        $page = empty($this->input->get('page')) ? 0 : $this->input->get('page');
+        $phone = empty($this->input->get('phone')) ? '' : $this->input->get('phone');
+        if ($page > 0) {
+            $next = $page + 1;
+            $prev = $page - 1;
+        } else {
+            $next = $page + 1;
+            $prev = 0;
+        }
+        $limit = empty($this->input->get('limit')) ? 15 : $this->input->get('limit');
+        $start = $page * $limit;
+        $where = [];
+        $like = [];
+        if ($phone !== '') {
+            $like['phone'] = $phone;
+        }
+        $this->load->model('supplier_model');
+        $data['result'] = $this->supplier_model->getResult($where, $limit, $start, 'id', $like);
+        $data['prev'] = $prev;
+        $data['next'] = $next;
+        $this->views->loadViewAdmin($template, $data);
+    }
+    public function updateStatusSupplier()
+    {
+        if ($this->method == 'get') {
+            $id = $this->input->get('id');
+            $status = $this->input->get('status');
+            $this->load->model('supplier_model');
+            $checkExist = $this->supplier_model->checkExist('id', $id);
+            if (is_numeric($status) && $checkExist > 0) {
+                $data = [
+                    'status' => $status
+                ];
+                $this->supplier_model->update($id, $data);
                 $response = [
                     'result' => 1,
                     'detail' => [
